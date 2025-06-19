@@ -11,6 +11,16 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
+// Root endpoint for quick check
+app.get('/', (req, res) => {
+  res.send('Certificate Generator API is running. Try /api/health');
+});
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'Service running' });
+});
+
 // Load attendees data
 const attendeesPath = path.join(__dirname, 'attendees.json');
 const getAttendees = () => {
@@ -97,6 +107,9 @@ app.post('/generate-certificate', async (req, res) => {
     
     // Generate PDF bytes
     const pdfBytes = await pdfDoc.save();
+    
+    // Log download event
+    console.log(`Certificate downloaded: Name="${attendee.name}", Code="${attendee.code}"`);
     
     // Send PDF as response
     res.set({
