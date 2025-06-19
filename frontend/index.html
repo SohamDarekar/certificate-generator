@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IEEE WIE Day Workshop Certificate Generator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>IEEE WIE Day Workshop Certificate Generator</h1>
+      <p>Enter your details to generate your participation certificate</p>
+    </header>
+    
+    <main class="card">
+      <form id="certificate-form">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="code">Verification Code</label>
+          <input type="text" id="code" name="code" placeholder="Enter your unique code" required>
+        </div>
+        
+        <div class="form-group">
+          <button type="submit" id="generate-btn">
+            <span>Generate Certificate</span>
+          </button>
+        </div>
+      </form>
+
+      <div id="message" class="hide"></div>
+      <div id="loading" class="hide">
+        <div class="spinner"></div>
+        <p>Generating your certificate...</p>
+      </div>
+    </main>
+    
+    <footer>
+      <p>&copy; 2025 IEEE Women in Engineering</p>
+    </footer>
+  </div>
+  
+  <script src="script.js"></script>
+</body>
+</html>
+      <div id="message" class="hide"></div>
+      <div id="loading" class="hide">
+        <div class="spinner"></div>
+        <p>Generating your certificate...</p>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2025 IEEE Women in Engineering</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

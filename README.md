@@ -1,0 +1,173 @@
+# IEEE WIE Day Workshop Certificate Generator
+
+This project is a certificate generator for IEEE WIE Day workshop attendees. It allows verified attendees to generate and download personalized participation certificates by entering their name and a unique code.
+
+## Quick Start
+
+To run the project locally:
+
+1. **Backend**
+   - Open a terminal and navigate to the backend directory:
+     ```
+     cd backend
+     ```
+   - Install dependencies:
+     ```
+     npm install
+     ```
+   - Make sure you have added your certificate template as `certificate-template.png` and updated `attendees.json`.
+   - Start the backend server:
+     ```
+     npm start
+     ```
+   - The backend will run at [http://localhost:3000](http://localhost:3000) by default.
+
+2. **Frontend**
+   - Open `frontend/index.html` directly in your web browser (no server needed).
+   - Make sure the `API_URL` in `frontend/script.js` is set to `http://localhost:3000`.
+
+You can now fill in your name and code to generate and download your certificate.
+
+## Project Structure
+
+```
+certificate-generator/
+├── backend/
+│   ├── attendees.json          # List of attendees with their unique codes
+│   ├── certificate-template.png # Certificate template image
+│   ├── generate.js             # Express server for certificate generation
+│   └── package.json            # Backend dependencies
+├── frontend/
+│   ├── index.html              # Main HTML file
+│   ├── style.css               # Styles for the frontend
+│   └── script.js               # Frontend JavaScript
+└── README.md                   # This file
+```
+
+## Prerequisites
+
+- Node.js (v14 or later)
+- npm (v6 or later)
+- A certificate template (PNG format)
+
+## Setup Instructions
+
+### Step 1: Prepare the certificate template
+
+1. Create a certificate template as a PNG file
+2. Place it in the `backend` folder as `certificate-template.png`
+
+### Step 2: Set up the backend
+
+1. Navigate to the backend directory:
+   ```
+   cd backend
+   ```
+
+2. Install dependencies:
+   ```
+   npm install
+   ```
+
+3. Update the `attendees.json` file with the list of valid attendees and their unique codes:
+   ```json
+   [
+     {
+       "name": "Attendee Name",
+       "code": "UNIQUE-CODE-001"
+     },
+     ...
+   ]
+   ```
+
+4. Start the server:
+   ```
+   npm start
+   ```
+
+   The server will run on http://localhost:3000 by default.
+
+### Step 3: Set up the frontend
+
+1. In the `frontend/script.js` file, update the `API_URL` to point to your backend server:
+   ```javascript
+   // For development
+   let API_URL = 'http://localhost:3000';
+   
+   // For production (when deployed)
+   // API_URL = 'https://your-render-app-name.onrender.com';
+   ```
+
+2. Open `index.html` in a browser to test the application locally
+
+## Deployment Instructions
+
+### Deploying the Backend to Render
+
+1. Create a free account on [Render](https://render.com/)
+2. Create a new Web Service
+3. Connect your GitHub repository (after pushing this code to GitHub)
+4. Configure the service:
+   - **Name**: `certificate-generator-backend` (or any name you prefer)
+   - **Build Command**: `npm install`
+   - **Start Command**: `node generate.js`
+   - **Environment Variables**: Add `PORT=10000` (Render uses this port by default)
+5. Click "Create Web Service"
+
+### Deploying the Frontend to Netlify
+
+1. Create a free account on [Netlify](https://www.netlify.com/)
+2. Update the `API_URL` in `script.js` to point to your Render backend URL:
+   ```javascript
+   let API_URL = 'https://your-render-app-name.onrender.com';
+   ```
+3. From the Netlify dashboard, click "Add new site" > "Import an existing project"
+4. Connect to your GitHub repository
+5. Configure build settings:
+   - **Publish directory**: `frontend`
+   - No build command needed
+6. Click "Deploy site"
+
+## Managing Attendees
+
+To add or modify the list of attendees:
+
+1. Edit the `backend/attendees.json` file
+2. Each attendee needs:
+   - `name`: Full name of the attendee
+   - `code`: A unique code (you can follow any format, e.g., `WIE2023-001`)
+3. After updating the file, redeploy the backend to Render if already deployed
+
+## Customizing the Certificate
+
+To adjust the positioning of the name on the certificate:
+
+1. Open `backend/generate.js`
+2. Find the section where the name is added to the PDF:
+   ```javascript
+   page.drawText(name, {
+     x: (page.getWidth() - textWidth) / 2,
+     y: page.getHeight() * 0.4, // Adjust this value to move the name up or down
+     size: fontSize, // Adjust this value to change the font size
+     font: font,
+     color: rgb(0, 0, 0),
+   });
+   ```
+3. Modify the `y` position and `fontSize` as needed to match your certificate template
+
+## Troubleshooting
+
+- **Certificate name not positioned correctly**: Adjust the `y` coordinate in `generate.js`
+- **Verification failing**: Check that names in the form match exactly with `attendees.json` (case-insensitive)
+- **CORS errors**: Make sure your Render backend URL is configured correctly in `script.js`
+- **PDF generation failing**: Verify that the certificate template file path is correct
+
+## Security Considerations
+
+- The attendee list is kept securely on the backend
+- Both name and code must match for certificate generation
+- Input validation is performed on both frontend and backend
+
+## License
+
+This project is free to use and modify for educational purposes.
