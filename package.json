@@ -1,0 +1,9 @@
+{
+  "name": "certificate-generator-root",
+  "private": true,
+  "scripts": {
+    "start": "npm --prefix frontend start",
+    "frontend": "npm --prefix frontend start",
+    "backend": "npm --prefix backend start"
+  }
+}

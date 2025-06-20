@@ -23,8 +23,13 @@ To run the project locally:
    - The backend will run at [http://localhost:3000](http://localhost:3000) by default.
 
 2. **Frontend**
-   - Open `frontend/index.html` directly in your web browser (no server needed).
-   - Make sure the `API_URL` in `frontend/script.js` is set to `http://localhost:3000`.
+   - From the project root directory, run:
+     ```
+     npm install --prefix frontend
+     npm start
+     ```
+   - This will start the frontend dev server (React) from the root folder.
+   - Make sure the `API_URL` in `frontend/src/services/certificateApi.js` or `frontend/script.js` is set to `http://localhost:3000`.
 
 You can now fill in your name and code to generate and download your certificate.
 
