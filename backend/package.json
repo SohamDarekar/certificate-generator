@@ -10,7 +10,9 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.18.2",
-    "fs-extra": "^11.1.1",
+    "fontkit": "^2.0.4",
+    "fs-extra": "^11.3.0",
+    "path": "^0.12.7",
     "pdf-lib": "^1.17.1"
   },
   "devDependencies": {

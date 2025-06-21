@@ -77,81 +77,146 @@ app.post("/generate-certificate", async (req, res) => {
       return res.status(400).json({ error: "Invalid name or code" });
     }
 
-    // Create PDF certificate
+    // === Begin: Custom PDF Generation as per requirements ===
+    const { PDFDocument, rgb } = require("pdf-lib");
+    const fs = require("fs-extra");
+    const path = require("path");
+    const fontkit = require("fontkit");
+
+    // Step 1: Create new PDF with exact size
     const pdfDoc = await PDFDocument.create();
-    const page = pdfDoc.addPage([842, 595]); // A4 landscape
+    pdfDoc.registerFontkit(fontkit);
+    const page = pdfDoc.addPage([2000, 1414]);
 
-    // Add title and text
-    const font = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
-    const fontSize = 24;
+    // Step 2: Embed background template
+    const bgBytes = fs.readFileSync(path.join(__dirname, "certificate-template.png"));
+    const bgImage = await pdfDoc.embedPng(bgBytes);
+    page.drawImage(bgImage, { x: 0, y: 0, width: 2000, height: 1414 });
 
-    const titleText = "IEEE WIE Day Workshop Certificate of Participation";
-    const titleWidth = font.widthOfTextAtSize(titleText, fontSize);
+    // Step 3: Embed fonts
+    const ibarraFontBytes = fs.readFileSync(path.join(__dirname, "fonts/IbarraRealNova-VariableFont_wght.ttf"));
+    const latoFontBytes = fs.readFileSync(path.join(__dirname, "fonts/Lato-Regular.ttf"));
+    const pinyonFontBytes = fs.readFileSync(path.join(__dirname, "fonts/PinyonScript-Regular.ttf"));
+    const ibarra = await pdfDoc.embedFont(ibarraFontBytes);
+    const lato = await pdfDoc.embedFont(latoFontBytes);
+    const pinyon = await pdfDoc.embedFont(pinyonFontBytes);
 
-    page.drawText(titleText, {
-      x: (page.getWidth() - titleWidth) / 2,
-      y: page.getHeight() - 100,
-      size: fontSize,
-      font: font,
-      color: rgb(0, 0, 0),
+    // Helper for centering text
+    function centerX(text, font, size, pageWidth = 2000) {
+      const textWidth = font.widthOfTextAtSize(text, size);
+      return (pageWidth - textWidth) / 2;
+    }
+
+    // Step 4: Overlay text fields (centered and styled)
+    // Heading 1
+    const heading1 = "CERTIFICATE OF";
+    page.drawText(heading1, {
+      x: centerX(heading1, ibarra, 98),
+      y: 1030,
+      size: 98,
+      font: ibarra,
+      color: rgb(0.23, 0.13, 0.33),
+    });
+    // Heading 2
+    const heading2 = "PARTICIPATION";
+    page.drawText(heading2, {
+      x: centerX(heading2, ibarra, 98),
+      y: 910,
+      size: 98,
+      font: ibarra,
+      color: rgb(0.23, 0.13, 0.33),
+    });
+    // Subheading
+    const subheading = "THIS CERTIFICATE PRESENT TO";
+    page.drawText(subheading, {
+      x: centerX(subheading, lato, 40),
+      y: 810,
+      size: 40,
+      font: lato,
+      color: rgb(0.79, 0.47, 0.09),
+    });
+    // Participant Name (dynamic, centered)
+    const nameFontSize = 170;
+    page.drawText(attendee.name, {
+      x: centerX(attendee.name, pinyon, nameFontSize),
+      y: 650,
+      size: nameFontSize,
+      font: pinyon,
+      color: rgb(0.23, 0.13, 0.33),
+    });
+    // Description (manual wrap, centered)
+    const description =
+      "For participating in the Game Development Workshop organized by the Department of Information Technology in association with IEEE-VSIT Student Branch on 3rd June, 2025.";
+    const maxWidth = 1520;
+    const lineHeight = 46;
+    let descLines = [];
+    let words = description.split(' ');
+    let currentLine = '';
+    for (let i = 0; i < words.length; i++) {
+      let testLine = currentLine ? currentLine + ' ' + words[i] : words[i];
+      let testWidth = lato.widthOfTextAtSize(testLine, 38);
+      if (testWidth > maxWidth && currentLine) {
+        descLines.push(currentLine);
+        currentLine = words[i];
+      } else {
+        currentLine = testLine;
+      }
+    }
+    if (currentLine) descLines.push(currentLine);
+    descLines.forEach((line, idx) => {
+      page.drawText(line, {
+        x: centerX(line, lato, 38),
+        y: 550 - idx * lineHeight,
+        size: 38,
+        font: lato,
+        color: rgb(0.79, 0.47, 0.09),
+      });
+    });
+    // Signature block left
+    const leftSigName = "DR. ASIF RAMPURAWALA";
+    const leftSigTitle = "Vice Principal";
+    page.drawText(leftSigName, {
+      x: 340,
+      y: 220,
+      size: 32,
+      font: lato,
+      color: rgb(0.23, 0.13, 0.33),
+    });
+    page.drawText(leftSigTitle, {
+      x: 450,
+      y: 180,
+      size: 23,
+      font: lato,
+      color: rgb(0.79, 0.47, 0.09),
+    });
+    // Signature block right
+    const rightSigName = "DR. ROHINI KELKAR";
+    const rightSigTitle = "Principal";
+    page.drawText(rightSigName, {
+      x: 1330,
+      y: 220,
+      size: 32,
+      font: lato,
+      color: rgb(0.23, 0.13, 0.33),
+    });
+    page.drawText(rightSigTitle, {
+      x: 1430,
+      y: 180,
+      size: 23,
+      font: lato,
+      color: rgb(0.79, 0.47, 0.09),
     });
 
-    const text = "This is to certify that";
-    const textWidth = font.widthOfTextAtSize(text, fontSize);
-
-    page.drawText(text, {
-      x: (page.getWidth() - textWidth) / 2,
-      y: page.getHeight() * 0.6,
-      size: fontSize,
-      font: font,
-      color: rgb(0, 0, 0),
-    });
-
-    // Add attendee name
-    const nameText = attendee.name;
-    const nameWidth = font.widthOfTextAtSize(nameText, fontSize * 1.5);
-
-    page.drawText(nameText, {
-      x: (page.getWidth() - nameWidth) / 2,
-      y: page.getHeight() * 0.5,
-      size: fontSize * 1.5,
-      font: font,
-      color: rgb(0, 0, 0),
-    });
-
-    const participationText =
-      "has participated in the IEEE WIE Day Workshop on June 19, 2025";
-    const participationWidth = font.widthOfTextAtSize(
-      participationText,
-      fontSize
-    );
-
-    page.drawText(participationText, {
-      x: (page.getWidth() - participationWidth) / 2,
-      y: page.getHeight() * 0.4,
-      size: fontSize,
-      font: font,
-      color: rgb(0, 0, 0),
-    });
-
-    // Generate PDF bytes
+    // Step 5: Save and output
     const pdfBytes = await pdfDoc.save();
-
-    // Log download event
-    console.log(
-      `Certificate downloaded: Name="${attendee.name}", Code="${attendee.code}"`
-    );
-
-    // Send PDF as response
+    const safeName = attendee.name.replace(/\s+/g, '_');
     res.set({
       "Content-Type": "application/pdf",
-      "Content-Disposition": `attachment; filename=${encodeURIComponent(
-        nameText
-      )}_certificate.pdf`,
+      "Content-Disposition": `attachment; filename=${encodeURIComponent(safeName)}_certificate.pdf`,
       "Content-Length": pdfBytes.length,
     });
-
     res.send(Buffer.from(pdfBytes));
+    // === End: Custom PDF Generation ===
   } catch (error) {
     console.error("Error generating certificate:", error);
     res.status(500).json({ error: "Failed to generate certificate" });
