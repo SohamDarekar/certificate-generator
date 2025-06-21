@@ -27,13 +27,13 @@ export function validateName(name) {
     return 'Name must be less than 100 characters';
   }
   
-  // Check for valid characters (letters, spaces, hyphens, apostrophes)
-  const nameRegex = /^[a-zA-Z\s\-'\.]+$/;
-  if (!nameRegex.test(trimmedName)) {
-    return 'Name can only contain letters, spaces, hyphens, apostrophes, and periods';
-  }
-  
-  return null;
+// Check for valid characters (letters, spaces, hyphens, apostrophes)
+const nameRegex = /^[a-zA-Z\s\-'.]+$/;
+if (!nameRegex.test(trimmedName)) {
+  return 'Name can only contain letters, spaces, hyphens, apostrophes, and periods';
+}
+
+return null;
 }
 
 /**
