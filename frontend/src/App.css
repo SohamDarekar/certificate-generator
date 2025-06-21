@@ -38,7 +38,37 @@
 /* Responsive utilities */
 @media (max-width: 768px) {
   .App {
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-base);
+  }
+  
+  .loading-content {
+    max-width: 90%;
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  .App {
+    font-size: var(--font-size-xs);
+  }
+  .loading-content {
+    padding: var(--space-4);
+    border-radius: var(--radius-base);
+    max-width: 95vw;
+    width: 95vw;
+  }
+}
+
+@media (max-width: 360px) {
+  .App {
+    font-size: 12px;
+  }
+  .loading-content {
+    padding: var(--space-2);
+    border-radius: var(--radius-sm);
+    max-width: 99vw;
+    width: 99vw;
   }
 }
 

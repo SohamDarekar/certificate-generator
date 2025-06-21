@@ -46,6 +46,13 @@ apiClient.interceptors.response.use(
     
     switch (status) {
       case 400:
+        // Check if error is related to workshop attendance
+        if (data?.error?.includes('verification') || 
+            data?.error?.includes('code') || 
+            data?.error?.includes('not found') ||
+            data?.error?.includes('invalid code')) {
+          throw new Error("You haven't attended this workshop");
+        }
         throw new Error(data?.error || 'Invalid request. Please check your input.');
       case 404:
         throw new Error('Service not found. Please try again later.');

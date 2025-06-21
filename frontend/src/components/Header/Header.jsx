@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './Header.css';
 
@@ -8,18 +8,35 @@ import './Header.css';
  */
 function Header() {
   const location = useLocation();
+  const [scrolled, setScrolled] = useState(false);
+
+  // Add scroll detection for header styling changes
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 10;
+      if (isScrolled !== scrolled) {
+        setScrolled(isScrolled);
+      }
+    };
+
+    document.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      document.removeEventListener('scroll', handleScroll);
+    };
+  }, [scrolled]);
 
   return (
-    <header className="header" role="banner">
+    <header className={`header ${scrolled ? 'header--scrolled' : ''}`} role="banner">
       <div className="container">
         <div className="header__content">
           {/* Logo and title */}
           <div className="header__brand">
             <Link to="/" className="header__logo-link" aria-label="IEEE WIE Home">
               <div className="header__logo">
-                <span className="header__logo-text">IEEE WIE</span>
+                <span className="header__logo-text">IEEE VSIT</span>
               </div>
               <div className="header__title">
+                <h1 className="header__title-main">IEEE VSIT</h1>
                 <h1 className="header__title-main">Certificate Generator</h1>
                 <p className="header__title-sub">Workshop Participation Certificates</p>
               </div>

@@ -24,19 +24,21 @@ function HomePage() {
     <div className="home-page">
       <div className="container">
         {/* Hero Section */}
-        <section className="home-page__hero" aria-labelledby="hero-title">
+        <section className="home-page__hero-card" aria-labelledby="hero-title">
           <div className="home-page__hero-content">
             <h1 id="hero-title" className="home-page__hero-title">
               IEEE WIE Day Workshop
-              <span className="home-page__hero-subtitle">Certificate Generator</span>
             </h1>
-            
+            <span className="home-page__hero-subtitle">
+              Certificate Generator
+            </span>
             <p className="home-page__hero-description">
-              Generate your official participation certificate for the IEEE Women in Engineering Day Workshop. 
+              Generate your official participation certificate for the IEEE Women in Engineering Day Workshop.<br />
               Enter your details below to download your personalized certificate.
             </p>
           </div>
         </section>
+        <div className="home-page__divider" />
 
         {/* Main Content */}
         <div className="home-page__content">
@@ -100,7 +102,11 @@ function HomePage() {
           </section>
 
           {/* Additional Information */}
-          <section className="home-page__additional-info" aria-labelledby="additional-info-title">
+          <section 
+            className="home-page__additional-info" 
+            aria-labelledby="additional-info-title"
+            style={{ marginBottom: 'var(--space-16)' }} // Added increased bottom margin
+          >
             <h2 id="additional-info-title" className="home-page__section-title">
               Important Information
             </h2>

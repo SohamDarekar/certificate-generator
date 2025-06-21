@@ -216,41 +216,102 @@
 /* Mobile responsive */
 @media (max-width: 768px) {
   .certificate-form {
-    padding: var(--space-6);
-    margin: var(--space-4);
-    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    margin: 0 auto;
+    width: 90%;
+    max-width: 500px;
+    border-radius: var(--radius-xl);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
   }
 
   .certificate-form__title {
     font-size: var(--font-size-2xl);
+    line-height: 1.3;
+    margin-bottom: var(--space-4);
   }
 
   .certificate-form__description {
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-base);
+    line-height: 1.6;
+    margin-bottom: var(--space-2);
+  }
+
+  .form-group__input {
+    padding: var(--space-4);
+    font-size: var(--font-size-base);
+    border-radius: var(--radius-md);
+    border-width: 2px;
+    height: 54px;
+  }
+  
+  .form-group__label {
+    font-size: var(--font-size-base);
+    margin-bottom: var(--space-2);
   }
 
   .certificate-form__actions {
-    gap: var(--space-3);
+    gap: var(--space-4);
+    margin-top: var(--space-6);
   }
 
   .btn--large {
-    padding: var(--space-3) var(--space-6);
+    padding: var(--space-4) var(--space-6);
     font-size: var(--font-size-base);
+    border-radius: var(--radius-lg);
+    height: 54px;
+  }
+  
+  .btn--secondary {
+    background-color: var(--neutral-50);
   }
 }
 
 @media (max-width: 480px) {
   .certificate-form {
     padding: var(--space-4);
-    margin: var(--space-2);
+    margin: var(--space-1);
+    border-radius: var(--radius-base);
+    max-width: 100vw;
+    width: 100vw;
+    min-width: 0;
+    box-sizing: border-box;
   }
 
   .certificate-form__title {
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-lg);
+  }
+
+  .certificate-form__description {
+    font-size: var(--font-size-xs);
   }
 
   .form-group__input {
-    padding: var(--space-3);
+    padding: var(--space-2);
+    font-size: var(--font-size-sm);
+  }
+
+  .btn {
+    font-size: var(--font-size-sm);
+    padding: var(--space-2) var(--space-4);
+  }
+}
+
+@media (max-width: 360px) {
+  .certificate-form {
+    padding: var(--space-2);
+    margin: 0;
+    border-radius: var(--radius-sm);
+  }
+  .certificate-form__title {
+    font-size: var(--font-size-base);
+  }
+  .form-group__input {
+    font-size: var(--font-size-xs);
+    padding: var(--space-1);
+  }
+  .btn {
+    font-size: var(--font-size-xs);
+    padding: var(--space-1) var(--space-2);
   }
 }
 
