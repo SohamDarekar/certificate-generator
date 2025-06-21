@@ -1,7 +1,20 @@
 import axios from 'axios';
 
+// Environment detection
+const isProduction = process.env.NODE_ENV === 'production';
+
 // API configuration
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3000';
+const API_BASE_URL = (() => {
+  // In production, we must have the API URL set
+  if (isProduction && !process.env.REACT_APP_API_URL) {
+    console.warn('Warning: REACT_APP_API_URL is not set in production environment');
+  }
+  
+  return process.env.REACT_APP_API_URL || 
+         (isProduction ? 'https://certificate-generator-3m2v.onrender.com' : 'http://localhost:3000');
+})();
+
+console.log(`API Base URL: ${API_BASE_URL}, Environment: ${process.env.NODE_ENV}`);
 
 // Create axios instance with default config
 const apiClient = axios.create({
@@ -10,6 +23,7 @@ const apiClient = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true, // Needed for CORS with credentials
 });
 
 // Request interceptor for logging
@@ -38,6 +52,15 @@ apiClient.interceptors.response.use(
       throw new Error('Request timeout. Please try again.');
     }
     
+    // Specific handling for CORS errors
+    if (error.message.includes('Network Error') || error.message.includes('CORS')) {
+      console.error('Possible CORS issue:', error.message);
+      throw new Error(
+        `Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at ${API_BASE_URL}. ` +
+        'Please ensure the server is configured correctly to allow requests from this origin.'
+      );
+    }
+    
     if (!error.response) {
       throw new Error('Unable to connect to the server. Please check your internet connection.');
     }
@@ -54,6 +77,8 @@ apiClient.interceptors.response.use(
           throw new Error("You haven't attended this workshop");
         }
         throw new Error(data?.error || 'Invalid request. Please check your input.');
+      case 403:
+        throw new Error('Access forbidden. This may be due to CORS restrictions.');
       case 404:
         throw new Error('Service not found. Please try again later.');
       case 431:

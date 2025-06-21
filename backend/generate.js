@@ -7,10 +7,34 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
+// CORS configuration
+const allowedOrigins = [
+  'https://ieeevsit-certificategenerator.netlify.app', // Netlify frontend
+  'https://certificate-generator-3m2v.onrender.com',  // Backend URL (if needed)
+];
+
+// Add localhost to allowed origins in development mode
+if (process.env.NODE_ENV !== 'production') {
+  allowedOrigins.push('http://localhost:3000', 'http://localhost:3001', 'http://localhost:8080');
+}
+
+// Enhanced CORS configuration
 app.use(cors({
-  origin: 'https://certificate-generator-3m2v.onrender.com'
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not allow access from the specified origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
 app.use(express.json());
 
 // Root endpoint for quick check
