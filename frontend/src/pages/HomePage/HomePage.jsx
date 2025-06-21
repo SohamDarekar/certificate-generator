@@ -27,13 +27,13 @@ function HomePage() {
         <section className="home-page__hero-card" aria-labelledby="hero-title">
           <div className="home-page__hero-content">
             <h1 id="hero-title" className="home-page__hero-title">
-              IEEE WIE Day Workshop
+              IEEE VSIT Workshop
             </h1>
             <span className="home-page__hero-subtitle">
               Certificate Generator
             </span>
             <p className="home-page__hero-description">
-              Generate your official participation certificate for the IEEE Women in Engineering Day Workshop.<br />
+              Generate your official participation certificate for the IEEE VSIT Workshop.<br />
               Enter your details below to download your personalized certificate.
             </p>
           </div>

@@ -4,7 +4,7 @@ import './AboutPage.css';
 
 /**
  * About page component
- * Provides information about IEEE WIE, the workshop, and the certificate system
+ * Provides information about IEEE VSIT, the workshop, and the certificate system
  */
 function AboutPage() {
   return (
@@ -14,10 +14,10 @@ function AboutPage() {
         <section className="about-page__hero" aria-labelledby="about-hero-title">
           <div className="about-page__hero-content">
             <h1 id="about-hero-title" className="about-page__hero-title">
-              About IEEE WIE Day Workshop
+              About IEEE VSIT Workshop
             </h1>
             <p className="about-page__hero-description">
-              Learn more about IEEE Women in Engineering, our workshop program, 
+              Learn more about IEEE VSIT, our workshop program, 
               and how our certificate system works.
             </p>
           </div>
@@ -25,10 +25,10 @@ function AboutPage() {
 
         {/* Main Content */}
         <div className="about-page__content">
-          {/* IEEE WIE Section */}
+          {/* IEEE VSIT Section */}
           <section className="about-page__section" aria-labelledby="wie-title">
             <h2 id="wie-title" className="about-page__section-title">
-              IEEE Women in Engineering (WIE)
+              IEEE VSIT
             </h2>
             
             <div className="about-page__text-content">
@@ -83,7 +83,7 @@ function AboutPage() {
           {/* Workshop Section */}
           <section className="about-page__section" aria-labelledby="workshop-title">
             <h2 id="workshop-title" className="about-page__section-title">
-              IEEE WIE Day Workshop
+              IEEE VSIT Workshop
             </h2>
             
             <div className="about-page__text-content">

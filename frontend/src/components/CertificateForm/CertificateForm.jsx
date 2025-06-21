@@ -117,7 +117,7 @@ function CertificateForm() {
           Generate Your Certificate
         </h2>
         <p className="certificate-form__description">
-          Enter your full name and verification code to generate your IEEE WIE Day Workshop participation certificate.
+          Enter your full name and verification code to generate your IEEE VSIT Workshop participation certificate.
         </p>
       </div>
 
