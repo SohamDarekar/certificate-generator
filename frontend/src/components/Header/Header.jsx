@@ -2,40 +2,40 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './Header.css';
 
-/**
- * Header component with navigation
- * Includes IEEE VSIT branding and navigation links
- */
-function Header() {
+const Header = () => {
   const location = useLocation();
-  const [scrolled, setScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  // Add scroll detection for header styling changes
   useEffect(() => {
     const handleScroll = () => {
-      const isScrolled = window.scrollY > 10;
-      if (isScrolled !== scrolled) {
-        setScrolled(isScrolled);
+      const scrolled = window.scrollY > 10;
+      if (scrolled !== isScrolled) {
+        setIsScrolled(scrolled);
       }
     };
 
     document.addEventListener('scroll', handleScroll, { passive: true });
+    
     return () => {
       document.removeEventListener('scroll', handleScroll);
     };
-  }, [scrolled]);
+  }, [isScrolled]);
 
   return (
-    <header className={`header ${scrolled ? 'header--scrolled' : ''}`} role="banner">
+    <header className={`header ${isScrolled ? 'header--scrolled' : ''}`} role="banner">
       <div className="container">
         <div className="header__content">
-          {/* Logo and title */}
           <div className="header__brand">
             <Link to="/" className="header__logo-link" aria-label="IEEE VSIT Home">
+              {/* Complete IEEE VSIT logo */}
               <img 
-                src="/img/IEEE.jpg" 
-                alt="IEEE VSIT Logo" 
-                className="header__logo-image" 
+                src="/img/IEEE-VSIT-logo.png" 
+                alt="IEEE VSIT - Women in Engineering Logo" 
+                className="header__logo-image"
+                onError={(e) => {
+                  // Fallback to the existing logo if the new one fails to load
+                  e.target.src = "/img/IEEE.jpg";
+                }}
               />
               <div className="header__title">
                 <h1 className="header__title-main">IEEE VSIT Certificate Generator</h1>
@@ -43,8 +43,7 @@ function Header() {
               </div>
             </Link>
           </div>
-
-          {/* Navigation */}
+          
           <nav className="header__nav" role="navigation" aria-label="Main navigation">
             <ul className="header__nav-list">
               <li className="header__nav-item">
@@ -71,6 +70,6 @@ function Header() {
       </div>
     </header>
   );
-}
+};
 
 export default Header;

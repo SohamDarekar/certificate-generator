@@ -3,6 +3,7 @@ import { useCertificate } from '../../contexts/CertificateContext';
 import { useCertificateApi } from '../../hooks/useCertificateApi';
 import { validateForm, sanitizeInput } from '../../utils/validation';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
+import Toast from '../Toast/Toast';
 import './CertificateForm.css';
 
 /**
@@ -20,9 +21,29 @@ function CertificateForm() {
 
   const { generateCertificate, isLoading } = useCertificateApi();
   
-  // Local state for real-time validation
+  // Local state for real-time validation and UI feedback
   const [touched, setTouched] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccessAnimation, setShowSuccessAnimation] = useState(false);
+  const [toast, setToast] = useState({ show: false, message: '', type: 'info' });
+  const [formProgress, setFormProgress] = useState(0);
+
+  // Calculate form completion progress
+  useEffect(() => {
+    const totalFields = 2;
+    let completedFields = 0;
+    
+    if (formData.name && formData.name.trim().length > 0) completedFields++;
+    if (formData.code && formData.code.trim().length > 0) completedFields++;
+    
+    setFormProgress((completedFields / totalFields) * 100);
+  }, [formData]);
+
+  // Toast handler
+  const showToast = (message, type = 'info') => {
+    setToast({ show: true, message, type });
+    setTimeout(() => setToast({ show: false, message: '', type: 'info' }), 5000);
+  };
 
   /**
    * Handle input changes with real-time validation
@@ -47,10 +68,8 @@ function CertificateForm() {
     // Validate single field
     const errors = validateForm({ ...formData, [field]: sanitizedValue });
     setValidationErrors(errors);
-  };
-
-  /**
-   * Handle form submission
+  };  /**
+   * Handle form submission with enhanced feedback
    */
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -70,34 +89,57 @@ function CertificateForm() {
       if (errorElement) {
         errorElement.focus();
       }
+      showToast('Please fix the errors below', 'error');
       return;
     }
-    
+
     setIsSubmitting(true);
     
     try {
       const success = await generateCertificate(formData);
       
       if (success) {
+        setShowSuccessAnimation(true);
+        
         // Clear form on successful generation
         setTimeout(() => {
           clearForm();
           setTouched({});
-        }, 2000);
+          setShowSuccessAnimation(false);
+        }, 3000);
       }
     } catch (error) {
       console.error('Certificate generation failed:', error);
+      
+      // Enhanced error messaging
+      let errorMessage = error.message;
+      
+      if (errorMessage.includes("haven't attended")) {
+        errorMessage = "You haven't attended this workshop. Please check your details.";
+      } else if (errorMessage.includes("not found")) {
+        errorMessage = "Name not found in our records. Please check the spelling.";
+      } else if (errorMessage.includes("Invalid verification code")) {
+        errorMessage = "Invalid verification code. Please verify your code.";
+      } else if (errorMessage.includes("don't match")) {
+        errorMessage = "Name and verification code don't match.";
+      } else if (errorMessage.includes("connect")) {
+        errorMessage = "Unable to connect to server. Please check your internet connection.";
+      }
+      
+      showToast(errorMessage, 'error');
     } finally {
       setIsSubmitting(false);
     }
   };
 
   /**
-   * Handle form reset
+   * Handle form reset with feedback
    */
   const handleReset = () => {
     clearForm();
     setTouched({});
+    setShowSuccessAnimation(false);
+    showToast('Form cleared successfully', 'info');
   };
 
   // Real-time validation effect
@@ -111,7 +153,20 @@ function CertificateForm() {
   const isFormDisabled = isLoading || isSubmitting;
 
   return (
-    <div className="certificate-form">
+    <>
+      <div className={`certificate-form ${showSuccessAnimation ? 'certificate-form--success' : ''}`}>
+        {/* Progress Bar */}
+        <div className="certificate-form__progress">
+          <div className="certificate-form__progress-track">
+            <div 
+              className="certificate-form__progress-fill" 
+              style={{ width: `${formProgress}%` }}
+            />
+          </div>
+          <span className="certificate-form__progress-text">
+            {formProgress === 100 ? 'Ready to generate certificate!' : `${Math.round(formProgress)}% complete`}
+          </span>
+        </div>
       <div className="certificate-form__header">
         <h2 className="certificate-form__title">
           Generate Your Certificate
@@ -264,6 +319,16 @@ function CertificateForm() {
         </p>
       </form>
     </div>
+    
+    {/* Toast Notification */}
+    {toast.show && (
+      <Toast
+        message={toast.message}
+        type={toast.type}
+        onClose={() => setToast({ show: false, message: '', type: 'info' })}
+      />
+    )}
+  </>
   );
 }
 

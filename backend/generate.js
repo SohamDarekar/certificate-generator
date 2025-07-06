@@ -69,12 +69,47 @@ app.post("/generate-certificate", async (req, res) => {
 
     // Verify attendee
     const attendees = getAttendees();
+    
+    // Check if name exists in the database
+    const nameExists = attendees.find(
+      (a) => a.name.toLowerCase() === name.toLowerCase()
+    );
+    
+    // Check if code exists in the database
+    const codeExists = attendees.find(
+      (a) => a.code === code
+    );
+    
+    // Find exact match
     const attendee = attendees.find(
       (a) => a.name.toLowerCase() === name.toLowerCase() && a.code === code
     );
+    
     if (!attendee) {
       console.log("Attendee not found or code mismatch:", { name, code });
-      return res.status(400).json({ error: "Invalid name or code" });
+      
+      // Provide specific error messages
+      if (!nameExists && !codeExists) {
+        return res.status(400).json({ 
+          error: "You haven't attended this workshop. Please check your name and verification code.",
+          errorCode: "NOT_ATTENDED"
+        });
+      } else if (!nameExists) {
+        return res.status(400).json({ 
+          error: "Name not found in our records. Please check the spelling and try again.",
+          errorCode: "NAME_NOT_FOUND"
+        });
+      } else if (!codeExists) {
+        return res.status(400).json({ 
+          error: "Invalid verification code. Please check your code and try again.",
+          errorCode: "INVALID_CODE"
+        });
+      } else {
+        return res.status(400).json({ 
+          error: "Name and verification code don't match. Please verify your details.",
+          errorCode: "MISMATCH"
+        });
+      }
     }
 
     // === Begin: Custom PDF Generation as per requirements ===
@@ -173,17 +208,17 @@ app.post("/generate-certificate", async (req, res) => {
       });
     });
     // Signature block left
-    const leftSigName = "DR. ASIF RAMPURAWALA";
-    const leftSigTitle = "Vice Principal";
+    const leftSigName = "MAITREYI JOGLEKAR";
+    const leftSigTitle = "Branch Counseller, VSIT";
     page.drawText(leftSigName, {
-      x: 340,
+      x: 370,
       y: 220,
       size: 32,
       font: lato,
       color: rgb(0.23, 0.13, 0.33),
     });
     page.drawText(leftSigTitle, {
-      x: 450,
+      x: 400,
       y: 180,
       size: 23,
       font: lato,
@@ -191,7 +226,7 @@ app.post("/generate-certificate", async (req, res) => {
     });
     // Signature block right
     const rightSigName = "DR. ROHINI KELKAR";
-    const rightSigTitle = "Principal";
+    const rightSigTitle = "Principal, VSIT";
     page.drawText(rightSigName, {
       x: 1330,
       y: 220,
@@ -200,7 +235,7 @@ app.post("/generate-certificate", async (req, res) => {
       color: rgb(0.23, 0.13, 0.33),
     });
     page.drawText(rightSigTitle, {
-      x: 1430,
+      x: 1400,
       y: 180,
       size: 23,
       font: lato,

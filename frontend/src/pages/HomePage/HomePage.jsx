@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import CertificateForm from '../../components/CertificateForm/CertificateForm';
 import InfoCard from '../../components/InfoCard/InfoCard';
+import FloatingElements from '../../components/FloatingElements/FloatingElements';
 import { useCertificateApi } from '../../hooks/useCertificateApi';
 import './HomePage.css';
 
@@ -30,11 +31,11 @@ function HomePage() {
               IEEE VSIT Workshop
             </h1>
             <span className="home-page__hero-subtitle">
-              Certificate Generator
+              Professional Certificate Generator
             </span>
             <p className="home-page__hero-description">
               Generate your official participation certificate for the IEEE VSIT Workshop.<br />
-              Enter your details below to download your personalized certificate.
+              Enter your details below to download your personalized certificate instantly.
             </p>
           </div>
         </section>
@@ -145,6 +146,9 @@ function HomePage() {
           </section>
         </div>
       </div>
+      
+      {/* Floating Elements */}
+      <FloatingElements />
     </div>
   );
 }

@@ -69,7 +69,18 @@ apiClient.interceptors.response.use(
     
     switch (status) {
       case 400:
-        // Check if error is related to workshop attendance
+        // Check for specific error codes from backend
+        if (data?.errorCode === 'NOT_ATTENDED') {
+          throw new Error("You haven't attended this workshop");
+        } else if (data?.errorCode === 'NAME_NOT_FOUND') {
+          throw new Error("Name not found in our records. Please check the spelling and try again.");
+        } else if (data?.errorCode === 'INVALID_CODE') {
+          throw new Error("Invalid verification code. Please check your code and try again.");
+        } else if (data?.errorCode === 'MISMATCH') {
+          throw new Error("Name and verification code don't match. Please verify your details.");
+        }
+        
+        // Fallback for other 400 errors
         if (data?.error?.includes('verification') || 
             data?.error?.includes('code') || 
             data?.error?.includes('not found') ||
