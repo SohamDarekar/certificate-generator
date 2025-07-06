@@ -167,6 +167,14 @@ To adjust the positioning of the name on the certificate:
 - **CORS errors**: Make sure your Render backend URL is configured correctly in `script.js`
 - **PDF generation failing**: Verify that the certificate template file path is correct
 
+### Need Help with Certificate Generation?
+
+If you have attended the event and still can't generate your certificate, please contact:
+
+- **Soham Darekar (IEEE Chairperson)**: +91 8692811341
+- **Shaunik Virdi (IEEE Vice-Chairperson)**: +91 90826 98665
+- **Rishi Desai (IEEE General Secretary)**: +91 8169775426
+
 ## Security Considerations
 
 - The attendee list is kept securely on the backend

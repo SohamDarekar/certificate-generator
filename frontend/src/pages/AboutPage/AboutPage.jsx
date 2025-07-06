@@ -172,9 +172,18 @@ function AboutPage() {
                 variant="success"
               >
                 <p>
-                  Each participant receives a unique verification code that ensures only registered 
+                  Each participant receives a unique roll number that ensures only registered 
                   attendees can generate certificates, maintaining the integrity of our certification process.
                 </p>
+                <div style={{ 
+                  marginTop: 'var(--space-3)', 
+                  padding: 'var(--space-3)', 
+                  backgroundColor: 'rgba(16, 185, 129, 0.1)', 
+                  borderRadius: 'var(--radius-md)',
+                  fontSize: 'var(--font-size-sm)'
+                }}>
+                  <strong>Can't generate your certificate?</strong> If you attended the event, contact our team for assistance.
+                </div>
               </InfoCard>
 
               <InfoCard
@@ -212,13 +221,74 @@ function AboutPage() {
           {/* Contact Section */}
           <section className="about-page__section" aria-labelledby="contact-title">
             <h2 id="contact-title" className="about-page__section-title">
+              Need Certificate Help?
+            </h2>
+            
+            <div className="about-page__text-content">
+              <p>
+                If you have attended the event and are still unable to generate your certificate, 
+                our IEEE VSIT team is here to help. Please contact any of the following coordinators:
+              </p>
+            </div>
+
+            <div className="about-page__cards">
+              <InfoCard
+                icon={
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z" />
+                  </svg>
+                }
+                title="Soham Darekar"
+                variant="primary"
+              >
+                <p><strong>IEEE Chairperson</strong></p>
+                <p style={{ fontSize: 'var(--font-size-lg)', fontWeight: 'var(--font-weight-bold)', color: 'var(--primary-600)' }}>
+                  +91 8692811341
+                </p>
+              </InfoCard>
+
+              <InfoCard
+                icon={
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z" />
+                  </svg>
+                }
+                title="Shaunik Virdi"
+                variant="secondary"
+              >
+                <p><strong>IEEE Vice-Chairperson</strong></p>
+                <p style={{ fontSize: 'var(--font-size-lg)', fontWeight: 'var(--font-weight-bold)', color: 'var(--secondary-600)' }}>
+                  +91 90826 98665
+                </p>
+              </InfoCard>
+
+              <InfoCard
+                icon={
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z" />
+                  </svg>
+                }
+                title="Rishi Desai"
+                variant="success"
+              >
+                <p><strong>IEEE General Secretary</strong></p>
+                <p style={{ fontSize: 'var(--font-size-lg)', fontWeight: 'var(--font-weight-bold)', color: 'var(--success-600)' }}>
+                  +91 8169775426
+                </p>
+              </InfoCard>
+            </div>
+          </section>
+
+          {/* Get Involved Section */}
+          <section className="about-page__section" aria-labelledby="involved-title">
+            <h2 id="involved-title" className="about-page__section-title">
               Get Involved
             </h2>
             
             <div className="about-page__text-content">
               <p>
-                Interested in joining IEEE WIE or participating in future workshops? 
-                Visit our official website or contact your local IEEE WIE chapter to learn more 
+                Interested in joining IEEE VSIT or participating in future workshops? 
+                Visit our official website or contact your local IEEE VSIT chapter to learn more 
                 about upcoming events and membership opportunities.
               </p>
             </div>

@@ -67,27 +67,29 @@ apiClient.interceptors.response.use(
     
     const { status, data } = error.response;
     
+    const contactInfo = '\n\nIf you have attended the event and still can\'t generate your certificate, please contact:\n• Soham Darekar (IEEE Chairperson): +91 8692811341\n• Shaunik Virdi (IEEE Vice-Chairperson): +91 90826 98665\n• Rishi Desai (IEEE General Secretary): +91 8169775426';
+    
     switch (status) {
       case 400:
         // Check for specific error codes from backend
         if (data?.errorCode === 'NOT_ATTENDED') {
-          throw new Error("You haven't attended this workshop");
+          throw new Error("You haven't attended this workshop" + contactInfo);
         } else if (data?.errorCode === 'NAME_NOT_FOUND') {
-          throw new Error("Name not found in our records. Please check the spelling and try again.");
+          throw new Error("Name not found in our records. Please check the spelling and try again." + contactInfo);
         } else if (data?.errorCode === 'INVALID_CODE') {
-          throw new Error("Invalid verification code. Please check your code and try again.");
+          throw new Error("Invalid roll number. Please check your roll number and try again." + contactInfo);
         } else if (data?.errorCode === 'MISMATCH') {
-          throw new Error("Name and verification code don't match. Please verify your details.");
+          throw new Error("Name and roll number don't match. Please verify your details." + contactInfo);
         }
         
         // Fallback for other 400 errors
-        if (data?.error?.includes('verification') || 
+        if (data?.error?.includes('roll') || 
             data?.error?.includes('code') || 
             data?.error?.includes('not found') ||
             data?.error?.includes('invalid code')) {
-          throw new Error("You haven't attended this workshop");
+          throw new Error("You haven't attended this workshop" + contactInfo);
         }
-        throw new Error(data?.error || 'Invalid request. Please check your input.');
+        throw new Error((data?.error || 'Invalid request. Please check your input.') + contactInfo);
       case 403:
         throw new Error('Access forbidden. This may be due to CORS restrictions.');
       case 404:
@@ -97,7 +99,7 @@ apiClient.interceptors.response.use(
       case 500:
         throw new Error('Server error. Please try again later.');
       default:
-        throw new Error(data?.error || `Request failed with status ${status}`);
+        throw new Error((data?.error || `Request failed with status ${status}`) + contactInfo);
     }
   }
 );

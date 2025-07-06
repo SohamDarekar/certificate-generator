@@ -64,7 +64,7 @@ app.post("/generate-certificate", async (req, res) => {
     console.log("Received certificate request:", { name, code });
 
     if (!name || !code) {
-      return res.status(400).json({ error: "Name and code are required" });
+      return res.status(400).json({ error: "Name and roll number are required" });
     }
 
     // Verify attendee
@@ -88,25 +88,27 @@ app.post("/generate-certificate", async (req, res) => {
     if (!attendee) {
       console.log("Attendee not found or code mismatch:", { name, code });
       
+      const contactInfo = "\n\nIf you have attended the event and still can't generate your certificate, please contact:\n• Soham Darekar (IEEE Chairperson): +91 8692811341\n• Shaunik Virdi (IEEE Vice-Chairperson): +91 90826 98665\n• Rishi Desai (IEEE General Secretary): +91 8169775426";
+      
       // Provide specific error messages
       if (!nameExists && !codeExists) {
         return res.status(400).json({ 
-          error: "You haven't attended this workshop. Please check your name and verification code.",
+          error: "You haven't attended this workshop. Please check your name and roll number." + contactInfo,
           errorCode: "NOT_ATTENDED"
         });
       } else if (!nameExists) {
         return res.status(400).json({ 
-          error: "Name not found in our records. Please check the spelling and try again.",
+          error: "Name not found in our records. Please check the spelling and try again." + contactInfo,
           errorCode: "NAME_NOT_FOUND"
         });
       } else if (!codeExists) {
         return res.status(400).json({ 
-          error: "Invalid verification code. Please check your code and try again.",
+          error: "Invalid roll number. Please check your roll number and try again." + contactInfo,
           errorCode: "INVALID_CODE"
         });
       } else {
         return res.status(400).json({ 
-          error: "Name and verification code don't match. Please verify your details.",
+          error: "Name and roll number don't match. Please verify your details." + contactInfo,
           errorCode: "MISMATCH"
         });
       }

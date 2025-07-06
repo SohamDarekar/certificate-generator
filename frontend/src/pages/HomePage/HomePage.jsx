@@ -37,6 +37,19 @@ function HomePage() {
               Generate your official participation certificate for the IEEE VSIT Workshop.<br />
               Enter your details below to download your personalized certificate instantly.
             </p>
+            <div style={{ 
+              marginTop: 'var(--space-4)', 
+              padding: 'var(--space-4)', 
+              backgroundColor: 'rgba(59, 130, 246, 0.1)', 
+              borderRadius: 'var(--radius-lg)',
+              fontSize: 'var(--font-size-sm)',
+              fontWeight: 'var(--font-weight-semibold)',
+              color: 'var(--primary-700)',
+              textAlign: 'center'
+            }}>
+              <strong>Need Help?</strong> If you attended the event and can't generate your certificate, contact:<br />
+              Soham: +91 8692811341 | Shaunik: +91 90826 98665 | Rishi: +91 8169775426
+            </div>
           </div>
         </section>
         <div className="home-page__divider" />
@@ -68,7 +81,7 @@ function HomePage() {
                 variant="primary"
               >
                 <p>
-                  Provide your full name exactly as you registered for the workshop and your unique verification code.
+                  Provide your full name exactly as you registered for the workshop and your roll number.
                 </p>
               </InfoCard>
 
@@ -138,9 +151,13 @@ function HomePage() {
                 variant="warning"
               >
                 <p>
-                  If you don't have your verification code or encounter any issues, 
-                  please contact your workshop organizer for assistance.
+                  If you attended the event and can't generate your certificate, contact:
                 </p>
+                <ul style={{ margin: 'var(--space-2) 0', padding: '0 0 0 var(--space-4)', fontSize: 'var(--font-size-sm)' }}>
+                  <li><strong>Soham Darekar (Chairperson):</strong> +91 8692811341</li>
+                  <li><strong>Shaunik Virdi (Vice-Chairperson):</strong> +91 90826 98665</li>
+                  <li><strong>Rishi Desai (General Secretary):</strong> +91 8169775426</li>
+                </ul>
               </InfoCard>
             </div>
           </section>

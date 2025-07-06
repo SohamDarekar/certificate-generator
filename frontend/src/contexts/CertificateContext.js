@@ -18,6 +18,14 @@ const initialState = {
   },
   validationErrors: {},
   downloadStatus: null, // 'success', 'error', or null
+  contactInfo: {
+    message: 'If you have attended the event and still can\'t generate your certificate, please contact:',
+    contacts: [
+      { name: 'Soham Darekar', title: 'IEEE Chairperson', phone: '+91 8692811341' },
+      { name: 'Shaunik Virdi', title: 'IEEE Vice-Chairperson', phone: '+91 90826 98665' },
+      { name: 'Rishi Desai', title: 'IEEE General Secretary', phone: '+91 8169775426' }
+    ]
+  }
 };
 
 // Reducer function

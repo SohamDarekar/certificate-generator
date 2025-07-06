@@ -37,33 +37,29 @@ return null;
 }
 
 /**
- * Validate verification code field
- * @param {string} code - Code to validate
+ * Validate roll number field
+ * @param {string} code - Roll number to validate (10 alphanumeric characters)
  * @returns {string|null} - Error message or null if valid
  */
 export function validateCode(code) {
   if (!code || typeof code !== 'string') {
-    return 'Verification code is required';
+    return 'Roll number is required. If you attended the event and need help, contact Rishi: +91 8169775426';
   }
   
   const trimmedCode = code.trim();
   
   if (trimmedCode.length === 0) {
-    return 'Verification code cannot be empty';
+    return 'Roll number cannot be empty. If you attended the event and need help, contact Rishi: +91 8169775426';
   }
   
-  if (trimmedCode.length < 3) {
-    return 'Verification code must be at least 3 characters long';
+  if (trimmedCode.length !== 10) {
+    return 'Roll number must be exactly 10 characters long. If you attended the event and need help, contact Soham: +91 8692811341';
   }
   
-  if (trimmedCode.length > 50) {
-    return 'Verification code must be less than 50 characters';
-  }
-  
-  // Check for valid characters (alphanumeric, hyphens, underscores)
-  const codeRegex = /^[a-zA-Z0-9\-_]+$/;
+  // Check for valid characters (alphanumeric for 10-character roll numbers)
+  const codeRegex = /^[A-Za-z0-9]{10}$/;
   if (!codeRegex.test(trimmedCode)) {
-    return 'Verification code can only contain letters, numbers, hyphens, and underscores';
+    return 'Roll number must contain exactly 10 alphanumeric characters (letters and numbers). If you attended the event and need help, contact Soham: +91 8692811341';
   }
   
   return null;

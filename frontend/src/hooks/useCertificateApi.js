@@ -32,12 +32,23 @@ export function useCertificateApi() {
         throw new Error('Failed to generate certificate');
       }
     } catch (err) {
-      const errorMessage = err.message || 'An error occurred while generating the certificate';
+      let errorMessage = err.message || 'An error occurred while generating the certificate';
+      
+      // If error doesn't already contain contact info, add it for certificate-related errors
+      if (!errorMessage.includes('Soham') && !errorMessage.includes('contact:')) {
+        if (errorMessage.includes('not found') || 
+            errorMessage.includes('haven\'t attended') || 
+            errorMessage.includes('Invalid roll') ||
+            errorMessage.includes('don\'t match')) {
+          errorMessage += '\n\nIf you attended the event and need help, contact:\nSoham: +91 8692811341 | Shaunik: +91 90826 98665 | Rishi: +91 8169775426';
+        }
+      }
+      
       setError(errorMessage);
       
       toast.error(errorMessage, {
         position: 'top-right',
-        autoClose: 7000,
+        autoClose: 10000,
       });
       
       return false;

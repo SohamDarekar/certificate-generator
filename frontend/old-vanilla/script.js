@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Validate inputs
     if (!name || !code) {
-      showMessage('Please enter both your name and verification code', 'error');
+      showMessage('Please enter both your name and roll number', 'error');
       return;
     }
     
@@ -64,11 +64,23 @@ document.addEventListener('DOMContentLoaded', () => {
           const errorData = await response.json();
           errorMsg = errorData.error || errorMsg;
         } catch {}
+        
+        // Add contact info for certificate-related errors
+        if (errorMsg.includes('not found') || 
+            errorMsg.includes('haven\'t attended') || 
+            errorMsg.includes('Invalid roll') ||
+            errorMsg.includes('don\'t match') ||
+            errorMsg.includes('required')) {
+          errorMsg += '\n\nIf you attended the event and need help, contact:\nSoham: +91 8692811341 | Shaunik: +91 90826 98665 | Rishi: +91 8169775426';
+        }
+        
         showMessage(errorMsg, 'error');
       }
     } catch (error) {
       console.error('Error:', error);
-      showMessage('An error occurred while connecting to the server', 'error');
+      let errorMsg = 'An error occurred while connecting to the server';
+      errorMsg += '\n\nIf you attended the event and need help, contact:\nSoham: +91 8692811341 | Shaunik: +91 90826 98665 | Rishi: +91 8169775426';
+      showMessage(errorMsg, 'error');
     } finally {
       loadingEl.classList.add('hide');
     }

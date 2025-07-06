@@ -118,10 +118,10 @@ function CertificateForm() {
         errorMessage = "You haven't attended this workshop. Please check your details.";
       } else if (errorMessage.includes("not found")) {
         errorMessage = "Name not found in our records. Please check the spelling.";
-      } else if (errorMessage.includes("Invalid verification code")) {
-        errorMessage = "Invalid verification code. Please verify your code.";
+      } else if (errorMessage.includes("Invalid roll number")) {
+        errorMessage = "Invalid roll number. Please verify your roll number.";
       } else if (errorMessage.includes("don't match")) {
-        errorMessage = "Name and verification code don't match.";
+        errorMessage = "Name and roll number don't match.";
       } else if (errorMessage.includes("connect")) {
         errorMessage = "Unable to connect to server. Please check your internet connection.";
       }
@@ -172,7 +172,7 @@ function CertificateForm() {
           Generate Your Certificate
         </h2>
         <p className="certificate-form__description">
-          Enter your full name and verification code to generate your IEEE VSIT Workshop participation certificate.
+          Enter your full name and roll number to generate your IEEE VSIT Workshop participation certificate.
         </p>
       </div>
 
@@ -234,7 +234,7 @@ function CertificateForm() {
             htmlFor="code" 
             className="form-group__label"
           >
-            Verification Code
+            Roll Number
             <span className="form-group__required" aria-label="required">*</span>
           </label>
           
@@ -248,17 +248,17 @@ function CertificateForm() {
             value={formData.code}
             onChange={(e) => handleInputChange('code', e.target.value)}
             onBlur={() => handleInputBlur('code')}
-            placeholder="Enter your unique verification code"
+            placeholder="Enter your roll number (alphanumeric)"
             disabled={isFormDisabled}
             aria-invalid={validationErrors.code && touched.code ? 'true' : 'false'}
             aria-describedby={validationErrors.code && touched.code ? 'code-error' : 'code-help'}
             autoComplete="off"
-            maxLength={50}
+            maxLength={10}
           />
           
           {!validationErrors.code && (
             <p id="code-help" className="form-group__help">
-              This code was provided to you during workshop registration
+              Enter your college roll number (10 alphanumeric characters)
             </p>
           )}
           
@@ -317,6 +317,30 @@ function CertificateForm() {
         <p id="submit-help" className="certificate-form__submit-help">
           Your certificate will be automatically downloaded as a PDF file
         </p>
+        
+        {/* Contact Information */}
+        <div className="certificate-form__contact-info">
+          <div className="certificate-form__contact-header">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style={{ color: 'var(--primary-500)' }}>
+              <path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z" />
+            </svg>
+            <span>Need Help?</span>
+          </div>
+          <p className="certificate-form__contact-text">
+            If you attended the event and can't generate your certificate:
+          </p>
+          <div className="certificate-form__contacts">
+            <div className="certificate-form__contact-item">
+              <strong>Soham Darekar (Chairperson):</strong> +91 8692811341
+            </div>
+            <div className="certificate-form__contact-item">
+              <strong>Shaunik Virdi (Vice-Chairperson):</strong> +91 90826 98665
+            </div>
+            <div className="certificate-form__contact-item">
+              <strong>Rishi Desai (General Secretary):</strong> +91 8169775426
+            </div>
+          </div>
+        </div>
       </form>
     </div>
     
