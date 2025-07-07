@@ -133,10 +133,10 @@ app.post("/generate-certificate", async (req, res) => {
     // Step 3: Embed fonts
     const ibarraFontBytes = fs.readFileSync(path.join(__dirname, "fonts/IbarraRealNova-VariableFont_wght.ttf"));
     const latoFontBytes = fs.readFileSync(path.join(__dirname, "fonts/Lato-Regular.ttf"));
-    const pinyonFontBytes = fs.readFileSync(path.join(__dirname, "fonts/PinyonScript-Regular.ttf"));
+    const alluraFontBytes = fs.readFileSync(path.join(__dirname, "fonts/Allura-Regular.ttf"));
     const ibarra = await pdfDoc.embedFont(ibarraFontBytes);
     const lato = await pdfDoc.embedFont(latoFontBytes);
-    const pinyon = await pdfDoc.embedFont(pinyonFontBytes);
+    const allura = await pdfDoc.embedFont(alluraFontBytes);
 
     // Helper for centering text
     function centerX(text, font, size, pageWidth = 2000) {
@@ -164,7 +164,7 @@ app.post("/generate-certificate", async (req, res) => {
       color: rgb(0.23, 0.13, 0.33),
     });
     // Subheading
-    const subheading = " THIS CERTIFICATE IS PRESENTED TO";
+    const subheading = "THIS CERTIFICATE IS PRESENTED TO";
     page.drawText(subheading, {
       x: centerX(subheading, lato, 40),
       y: 810,
@@ -173,12 +173,12 @@ app.post("/generate-certificate", async (req, res) => {
       color: rgb(0.79, 0.47, 0.09),
     });
     // Participant Name (dynamic, centered)
-    const nameFontSize = 170;
+    const nameFontSize = 190;
     page.drawText(attendee.name, {
-      x: centerX(attendee.name, pinyon, nameFontSize),
+      x: centerX(attendee.name, allura, nameFontSize),
       y: 650,
       size: nameFontSize,
-      font: pinyon,
+      font: allura,
       color: rgb(0.23, 0.13, 0.33),
     });
     // Description (manual wrap, centered)
