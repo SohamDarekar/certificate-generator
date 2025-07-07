@@ -164,7 +164,7 @@ app.post("/generate-certificate", async (req, res) => {
       color: rgb(0.23, 0.13, 0.33),
     });
     // Subheading
-    const subheading = "THIS CERTIFICATE PRESENT TO";
+    const subheading = " THIS CERTIFICATE IS PRESENTED TO";
     page.drawText(subheading, {
       x: centerX(subheading, lato, 40),
       y: 810,
@@ -183,7 +183,7 @@ app.post("/generate-certificate", async (req, res) => {
     });
     // Description (manual wrap, centered)
     const description =
-      "For participating in the Game Development Workshop organized by the Department of Information Technology in association with IEEE-VSIT Student Branch on 3rd June, 2025.";
+    "For attending seminars on Cloud Computing, Performance Testing, and LinkedIn, conducted on the 3rd, 4th, and 5th of July, 2025, as part of the WIE Day’s 2025 celebrations. Organized by IEEE-WIE VSIT Student Branch in association with IEEE-VSIT Student Branch.";
     const maxWidth = 1520;
     const lineHeight = 46;
     let descLines = [];
