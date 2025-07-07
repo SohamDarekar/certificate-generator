@@ -39,15 +39,6 @@ function FloatingElements() {
 
   return (
     <div className="floating-elements">
-      {/* Floating particles */}
-      <div className="floating-particles">
-        <div className="particle particle--1"></div>
-        <div className="particle particle--2"></div>
-        <div className="particle particle--3"></div>
-        <div className="particle particle--4"></div>
-        <div className="particle particle--5"></div>
-      </div>
-
       {/* Floating action buttons */}
       <div className={`floating-actions ${isScrolled ? 'floating-actions--scrolled' : ''}`}>
         {/* Quick certificate button */}
