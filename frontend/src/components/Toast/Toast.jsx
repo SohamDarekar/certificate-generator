@@ -16,10 +16,11 @@ function Toast({
 }) {
   useEffect(() => {
     if (autoClose && onClose) {
-      const timer = setTimeout(onClose, duration);
+      const adjustedDuration = (type === 'error' && window.innerWidth <= 768) ? 8000 : duration;
+      const timer = setTimeout(onClose, adjustedDuration);
       return () => clearTimeout(timer);
     }
-  }, [autoClose, duration, onClose]);
+  }, [autoClose, duration, onClose, type]);
 
   const getIcon = () => {
     switch (type) {
@@ -75,7 +76,7 @@ function Toast({
         <div 
           className="toast__progress-bar" 
           style={{ 
-            animationDuration: `${duration}ms`,
+            animationDuration: `${(type === 'error' && window.innerWidth <= 768) ? 8000 : duration}ms`,
             animationPlayState: autoClose ? 'running' : 'paused'
           }}
         />

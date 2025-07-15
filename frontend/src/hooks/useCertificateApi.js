@@ -34,13 +34,24 @@ export function useCertificateApi() {
     } catch (err) {
       let errorMessage = err.message || 'An error occurred while generating the certificate';
       
-      // If error doesn't already contain contact info, add it for certificate-related errors
-      if (!errorMessage.includes('Soham') && !errorMessage.includes('contact:')) {
-        if (errorMessage.includes('not found') || 
-            errorMessage.includes('haven\'t attended') || 
-            errorMessage.includes('Invalid roll') ||
-            errorMessage.includes('don\'t match')) {
-          errorMessage += '\n\nIf you attended the event and need help, contact:\nSoham: +91 8692811341 | Shaunik: +91 90826 98665 | Rishi: +91 8169775426';
+      // Simplify error messages for mobile screens
+      if (window.innerWidth <= 768) {
+        if (errorMessage.includes('mismatch') || 
+            errorMessage.includes('not found') || 
+            errorMessage.includes('haven\'t attended')) {
+          errorMessage = 'Attendee not found or roll number mismatch. Contact: Soham +91 8692811341';
+        } else if (errorMessage.includes('connect') || errorMessage.includes('network')) {
+          errorMessage = 'Connection error. Please check your internet and try again.';
+        }
+      } else {
+        // For desktop, keep detailed contact info if not already present
+        if (!errorMessage.includes('Soham') && !errorMessage.includes('contact:')) {
+          if (errorMessage.includes('mismatch') || 
+              errorMessage.includes('not found') || 
+              errorMessage.includes('Invalid roll') ||
+              errorMessage.includes('haven\'t attended')) {
+            errorMessage += '\n\nIf you attended the event and need help, contact:\nSoham: +91 8692811341 | Shaunik: +91 90826 98665 | Rishi: +91 8169775426';
+          }
         }
       }
       

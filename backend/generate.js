@@ -108,7 +108,7 @@ app.post("/generate-certificate", async (req, res) => {
         });
       } else {
         return res.status(400).json({ 
-          error: "Name and roll number don't match. Please verify your details." + contactInfo,
+          error: "Attendee not found or roll number mismatch. Please check your details and try again." + contactInfo,
           errorCode: "MISMATCH"
         });
       }

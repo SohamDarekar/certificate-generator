@@ -73,21 +73,22 @@ apiClient.interceptors.response.use(
       case 400:
         // Check for specific error codes from backend
         if (data?.errorCode === 'NOT_ATTENDED') {
-          throw new Error("You haven't attended this workshop" + contactInfo);
+          throw new Error("Attendee not found or roll number mismatch" + contactInfo);
         } else if (data?.errorCode === 'NAME_NOT_FOUND') {
-          throw new Error("Name not found in our records. Please check the spelling and try again." + contactInfo);
+          throw new Error("Attendee not found or roll number mismatch" + contactInfo);
         } else if (data?.errorCode === 'INVALID_CODE') {
-          throw new Error("Invalid roll number. Please check your roll number and try again." + contactInfo);
+          throw new Error("Attendee not found or roll number mismatch" + contactInfo);
         } else if (data?.errorCode === 'MISMATCH') {
-          throw new Error("Name and roll number don't match. Please verify your details." + contactInfo);
+          throw new Error("Attendee not found or roll number mismatch" + contactInfo);
         }
         
         // Fallback for other 400 errors
         if (data?.error?.includes('roll') || 
             data?.error?.includes('code') || 
             data?.error?.includes('not found') ||
-            data?.error?.includes('invalid code')) {
-          throw new Error("You haven't attended this workshop" + contactInfo);
+            data?.error?.includes('invalid code') ||
+            data?.error?.includes('mismatch')) {
+          throw new Error("Attendee not found or roll number mismatch" + contactInfo);
         }
         throw new Error((data?.error || 'Invalid request. Please check your input.') + contactInfo);
       case 403:

@@ -41,8 +41,10 @@ function CertificateForm() {
 
   // Toast handler
   const showToast = (message, type = 'info') => {
+    // Longer duration for error messages on mobile
+    const duration = (type === 'error' && window.innerWidth <= 768) ? 8000 : 5000;
     setToast({ show: true, message, type });
-    setTimeout(() => setToast({ show: false, message: '', type: 'info' }), 5000);
+    setTimeout(() => setToast({ show: false, message: '', type: 'info' }), duration);
   };
 
   /**
@@ -115,15 +117,22 @@ function CertificateForm() {
       let errorMessage = error.message;
       
       if (errorMessage.includes("haven't attended")) {
-        errorMessage = "You haven't attended this workshop. Please check your details.";
+        errorMessage = "Attendee not found or roll number mismatch. Please check your details.";
       } else if (errorMessage.includes("not found")) {
-        errorMessage = "Name not found in our records. Please check the spelling.";
+        errorMessage = "Attendee not found or roll number mismatch. Please check your details.";
       } else if (errorMessage.includes("Invalid roll number")) {
-        errorMessage = "Invalid roll number. Please verify your roll number.";
-      } else if (errorMessage.includes("don't match")) {
-        errorMessage = "Name and roll number don't match.";
+        errorMessage = "Attendee not found or roll number mismatch. Please check your details.";
+      } else if (errorMessage.includes("don't match") || errorMessage.includes("mismatch")) {
+        errorMessage = "Attendee not found or roll number mismatch. Please check your details.";
       } else if (errorMessage.includes("connect")) {
         errorMessage = "Unable to connect to server. Please check your internet connection.";
+      }
+      
+      // For mobile, show shorter message with contact info
+      if (window.innerWidth <= 768) {
+        if (errorMessage.includes("mismatch") || errorMessage.includes("not found")) {
+          errorMessage = "Attendee not found or roll number mismatch. Contact: Soham +91 8692811341";
+        }
       }
       
       showToast(errorMessage, 'error');
