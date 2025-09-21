@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
             errorMsg.includes('Invalid roll') ||
             errorMsg.includes('don\'t match') ||
             errorMsg.includes('required')) {
-          errorMsg += '\n\nIf you attended the event and need help, contact:\nSoham: +91 8692811341 | Shaunik: +91 90826 98665 | Rishi: +91 8169775426';
+          errorMsg += '\n\nNote: Both name and roll number matching are case-insensitive.\nIf you attended the event and need help, contact:\nSoham: +91 8692811341 | Shaunik: +91 90826 98665 | Rishi: +91 8169775426';
         }
         
         showMessage(errorMsg, 'error');
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (error) {
       console.error('Error:', error);
       let errorMsg = 'An error occurred while connecting to the server';
-      errorMsg += '\n\nIf you attended the event and need help, contact:\nSoham: +91 8692811341 | Shaunik: +91 90826 98665 | Rishi: +91 8169775426';
+      errorMsg += '\n\nNote: Both name and roll number matching are case-insensitive.\nIf you attended the event and need help, contact:\nSoham: +91 8692811341 | Shaunik: +91 90826 98665 | Rishi: +91 8169775426';
       showMessage(errorMsg, 'error');
     } finally {
       loadingEl.classList.add('hide');

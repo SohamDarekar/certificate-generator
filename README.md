@@ -1,6 +1,14 @@
-# IEEE WIE Day Workshop Certificate Generator
+# IEEE VSIT Workshop Certificate Generator
 
-This project is a certificate generator for IEEE WIE Day workshop attendees. It allows verified attendees to generate and download personalized participation certificates by entering their name and a unique code.
+This project is a certificate generator for IEEE VSIT workshop attendees. It allows verified attendees to generate and download personalized participation certificates by entering their name and a unique code.
+
+## Features
+
+- **Flexible Name Matching**: The system accepts different capitalizations of names (e.g., "Soham Darekar", "soham darekar", "SOHAM DAREKAR")
+- **Case-Insensitive Roll Numbers**: Roll numbers work regardless of letter casing (e.g., "24302F0019", "24302f0019", "24302F0019")
+- **Secure Verification**: Both name and roll number must match our attendee database
+- **Instant Certificate Generation**: Download your PDF certificate immediately
+- **Professional Format**: High-quality certificates suitable for portfolios
 
 ## Quick Start
 
@@ -32,6 +40,8 @@ To run the project locally:
    - Make sure the `API_URL` in `frontend/src/services/certificateApi.js` or `frontend/script.js` is set to `http://localhost:3000`.
 
 You can now fill in your name and code to generate and download your certificate.
+
+**Note**: Both name and roll number matching are case-insensitive, so "Soham Darekar" with "24302F0019" will work the same as "soham darekar" with "24302f0019".
 
 ## Project Structure
 
@@ -139,9 +149,13 @@ To add or modify the list of attendees:
 
 1. Edit the `backend/attendees.json` file
 2. Each attendee needs:
-   - `name`: Full name of the attendee
-   - `code`: A unique code (you can follow any format, e.g., `WIE2023-001`)
+   - `name`: Full name of the attendee (exact format for certificate)
+   - `code`: A unique code (you can follow any format, e.g., `25302D0052`)
 3. After updating the file, redeploy the backend to Render if already deployed
+
+**Name & Roll Number Matching**: The system automatically handles different capitalizations for both fields:
+- Names: "Soham Darekar", "soham darekar", "SOHAM DAREKAR" all work
+- Roll Numbers: "24302F0019", "24302f0019", "24302F0019" all work
 
 ## Customizing the Certificate
 
@@ -163,7 +177,8 @@ To adjust the positioning of the name on the certificate:
 ## Troubleshooting
 
 - **Certificate name not positioned correctly**: Adjust the `y` coordinate in `generate.js`
-- **Verification failing**: Check that names in the form match exactly with `attendees.json` (case-insensitive)
+- **Name/Roll number not found**: Both systems are case-insensitive, but check spelling carefully
+- **Verification failing**: Check that both name and roll number match with `attendees.json` (both are case-insensitive)
 - **CORS errors**: Make sure your Render backend URL is configured correctly in `script.js`
 - **PDF generation failing**: Verify that the certificate template file path is correct
 

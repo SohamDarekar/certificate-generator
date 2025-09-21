@@ -81,7 +81,7 @@ function HomePage() {
                 variant="primary"
               >
                 <p>
-                  Provide your full name exactly as you registered for the workshop and your roll number.
+                  Provide your full name and roll number. Both are case-insensitive for your convenience.
                 </p>
               </InfoCard>
 

@@ -221,7 +221,7 @@ function CertificateForm() {
           
           {!validationErrors.name && (
             <p id="name-help" className="form-group__help">
-              Enter your name exactly as you registered for the workshop
+              Enter your name as registered (case-insensitive: "John Doe" or "john doe" both work)
             </p>
           )}
           
@@ -267,7 +267,7 @@ function CertificateForm() {
           
           {!validationErrors.code && (
             <p id="code-help" className="form-group__help">
-              Enter your college roll number (10 alphanumeric characters)
+              Enter your college roll number (case-insensitive: "24302F0019" or "24302f0019" both work)
             </p>
           )}
           

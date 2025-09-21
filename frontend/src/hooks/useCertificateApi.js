@@ -39,7 +39,7 @@ export function useCertificateApi() {
         if (errorMessage.includes('mismatch') || 
             errorMessage.includes('not found') || 
             errorMessage.includes('haven\'t attended')) {
-          errorMessage = 'Attendee not found or roll number mismatch. Contact: Soham +91 8692811341';
+          errorMessage = 'Name/roll number not found. Both are case-insensitive. Contact: Soham +91 8692811341';
         } else if (errorMessage.includes('connect') || errorMessage.includes('network')) {
           errorMessage = 'Connection error. Please check your internet and try again.';
         }
@@ -50,7 +50,7 @@ export function useCertificateApi() {
               errorMessage.includes('not found') || 
               errorMessage.includes('Invalid roll') ||
               errorMessage.includes('haven\'t attended')) {
-            errorMessage += '\n\nIf you attended the event and need help, contact:\nSoham: +91 8692811341 | Shaunik: +91 90826 98665 | Rishi: +91 8169775426';
+            errorMessage += '\n\nNote: Both name and roll number matching are case-insensitive. If you attended the event and need help, contact:\nSoham: +91 8692811341 | Shaunik: +91 90826 98665 | Rishi: +91 8169775426';
           }
         }
       }

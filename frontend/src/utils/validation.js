@@ -43,13 +43,13 @@ return null;
  */
 export function validateCode(code) {
   if (!code || typeof code !== 'string') {
-    return 'Roll number is required. If you attended the event and need help, contact Rishi: +91 8169775426';
+    return 'Roll number is required. If you attended the event and need help, contact Soham: +91 8692811341';
   }
   
   const trimmedCode = code.trim();
   
   if (trimmedCode.length === 0) {
-    return 'Roll number cannot be empty. If you attended the event and need help, contact Rishi: +91 8169775426';
+    return 'Roll number cannot be empty. If you attended the event and need help, contact Soham: +91 8692811341';
   }
   
   if (trimmedCode.length !== 10) {
@@ -59,7 +59,7 @@ export function validateCode(code) {
   // Check for valid characters (alphanumeric for 10-character roll numbers)
   const codeRegex = /^[A-Za-z0-9]{10}$/;
   if (!codeRegex.test(trimmedCode)) {
-    return 'Roll number must contain exactly 10 alphanumeric characters (letters and numbers). If you attended the event and need help, contact Soham: +91 8692811341';
+    return 'Roll number must contain exactly 10 alphanumeric characters (letters and numbers, case-insensitive). If you attended the event and need help, contact Soham: +91 8692811341';
   }
   
   return null;

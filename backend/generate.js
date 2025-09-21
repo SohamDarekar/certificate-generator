@@ -67,22 +67,36 @@ app.post("/generate-certificate", async (req, res) => {
       return res.status(400).json({ error: "Name and roll number are required" });
     }
 
-    // Verify attendee
+    // Verify attendee with flexible name and roll number matching
     const attendees = getAttendees();
     
-    // Check if name exists in the database
-    const nameExists = attendees.find(
-      (a) => a.name.toLowerCase() === name.toLowerCase()
+    // Normalize names for comparison (remove extra spaces, convert to lowercase)
+    const normalizeNameForComparison = (name) => {
+      return name.toLowerCase().replace(/\s+/g, ' ').trim();
+    };
+    
+    // Normalize roll numbers for comparison (convert to uppercase, remove spaces)
+    const normalizeCodeForComparison = (code) => {
+      return code.toUpperCase().replace(/\s+/g, '').trim();
+    };
+    
+    const normalizedInputName = normalizeNameForComparison(name);
+    const normalizedInputCode = normalizeCodeForComparison(code);
+    
+    // Check if name exists in the database (flexible matching)
+    const nameMatch = attendees.find(
+      (a) => normalizeNameForComparison(a.name) === normalizedInputName
     );
     
-    // Check if code exists in the database
+    // Check if code exists in the database (case-insensitive matching)
     const codeExists = attendees.find(
-      (a) => a.code === code
+      (a) => normalizeCodeForComparison(a.code) === normalizedInputCode
     );
     
-    // Find exact match
+    // Find exact match using flexible name and roll number matching
     const attendee = attendees.find(
-      (a) => a.name.toLowerCase() === name.toLowerCase() && a.code === code
+      (a) => normalizeNameForComparison(a.name) === normalizedInputName && 
+             normalizeCodeForComparison(a.code) === normalizedInputCode
     );
     
     if (!attendee) {
@@ -91,12 +105,12 @@ app.post("/generate-certificate", async (req, res) => {
       const contactInfo = "\n\nIf you have attended the event and still can't generate your certificate, please contact:\n• Soham Darekar (IEEE Chairperson): +91 8692811341\n• Shaunik Virdi (IEEE Vice-Chairperson): +91 90826 98665\n• Rishi Desai (IEEE General Secretary): +91 8169775426";
       
       // Provide specific error messages
-      if (!nameExists && !codeExists) {
+      if (!nameMatch && !codeExists) {
         return res.status(400).json({ 
           error: "You haven't attended this workshop. Please check your name and roll number." + contactInfo,
           errorCode: "NOT_ATTENDED"
         });
-      } else if (!nameExists) {
+      } else if (!nameMatch) {
         return res.status(400).json({ 
           error: "Name not found in our records. Please check the spelling and try again." + contactInfo,
           errorCode: "NAME_NOT_FOUND"
@@ -183,7 +197,7 @@ app.post("/generate-certificate", async (req, res) => {
     });
     // Description (manual wrap, centered)
     const description =
-    "For attending seminars on Cloud Computing, Performance Testing, and LinkedIn, conducted on the 3rd, 4th, and 5th of July, 2025, as part of the WIE Day’s 2025 celebrations. Organized by IEEE-WIE VSIT Student Branch in association with IEEE-VSIT Student Branch.";
+    "For participation in the Gittopia workshop on Git & GitHub, held on September 22nd, 2025, as part of the IEEE Day 2025 celebrations. Organized by the IEEE-VSIT Student Branch in collaboration with the IEEE WIE VSIT Affinity Group.";
     const maxWidth = 1520;
     const lineHeight = 46;
     let descLines = [];
