@@ -10,7 +10,8 @@ const PORT = process.env.PORT || 3000;
 // CORS configuration
 const allowedOrigins = [
   'https://ieeevsit-certificategenerator.netlify.app', // Netlify frontend
-  'https://certificate-generator-3m2v.onrender.com',  // Backend URL (if needed)
+  // 'https://certificate-generator-3m2v.onrender.com',   // Backend URL (if needed)
+  'https://certificate-generator-3m2v.onrender.com',  
 ];
 
 // Add localhost to allowed origins in development mode
